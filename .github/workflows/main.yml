@@ -1,1 +1,19 @@
+name : CI
 
+on:
+  push: [main]
+pull_request:
+  branches: [main]
+
+jobs:
+  build:
+  runs-on: ubuntu-latest
+  steps:
+    - users: actions/checkout@v
+
+    - name: Scripsts
+      run:
+        docker build -t app.
+        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCER_USERNAME }} --password-stdin
+        docker tag app anastasia2812/docker-github
+        docker push anastasia2812/docker-github
